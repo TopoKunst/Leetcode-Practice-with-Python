@@ -1,22 +1,26 @@
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
 class Solution(object):
-    def twoSum(self, nums, target):
+    def addTwoNumbers(self, l1, l2):
         """
-        :type nums: List[int]
-        :type target: int
-        :rtype: List[int]
+        :type l1: Optional[ListNode]
+        :type l2: Optional[ListNode]
+        :rtype: Optional[ListNode]
         """
-        # dicts: num: index
-        dicts = {}
-        res = []
-        for idx, num in enumerate(nums):
-            if target - num not in dicts:
-                dicts[num] = idx
-            else:
-                res += [dicts[target-num], idx]
-        return res
+        # sentry node
+        dummy = ListNode()
 
-solution = Solution()
-nums = [3, 2, 4]
-targets = 6
-res = solution.twoSum(nums, targets)
-print(res)
+        cur, carry = dummy, 0
+
+        # iterate each number
+        while l1 or l2 or carry:
+            s = (l1.val if l1 else 0) + (l2.val if l2 else 0) + carry
+            carry = s // 10
+            cur.next = ListNode(s % 10)
+            cur = cur.next
+            l1 = l1.next if l1 else l1
+            l2 = l2.next if l2 else l2
+        return dummy.next
